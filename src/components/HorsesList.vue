@@ -32,11 +32,14 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import type { RootState } from '@/store'
+import { useHoveredHorse } from '@/composables/useHoveredHorse'
+import { useSelectedScheduleRound } from '@/composables/useSelectedScheduleRound'
 
 const store = useStore<RootState>()
+const { setHoveredHorse, clearHover } = useHoveredHorse()
+const { selectedScheduleRound } = useSelectedScheduleRound()
 
 const horses = computed(() => store.state.horses.horses)
-const selectedScheduleRound = computed(() => store.state.ui.selectedScheduleRound)
 const schedule = computed(() => store.state.race.schedule)
 const currentRound = computed(() => store.getters['race/currentRound'])
 
@@ -92,12 +95,12 @@ function isFavorite(horseId: number): boolean {
 function handleHoverEnter(horseId: number) {
   // Only hover if there's a current race and this horse is participating
   if (currentRaceHorseIds.value && currentRaceHorseIds.value.has(horseId)) {
-    store.dispatch('ui/setHoveredHorseId', horseId)
+    setHoveredHorse(horseId)
   }
 }
 
 function handleHoverLeave() {
-  store.dispatch('ui/setHoveredHorseId', null)
+  clearHover()
 }
 </script>
 
@@ -127,10 +130,18 @@ h2 {
 
 .horses-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: var(--spacing-md);
   list-style-type: none;
   padding: 0;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 480px) {
+  .horses-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
 }
 
 .horse-card {

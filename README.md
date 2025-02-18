@@ -184,7 +184,7 @@ idle → [Generate] → generated → [Start] → running → [Finish] → finis
 
 ## 🧪 Testing
 
-### Unit Tests (30 tests)
+### Unit Tests (89 tests)
 
 ```sh
 npm run test:unit
@@ -195,8 +195,11 @@ npm run test:unit
 - **generation.spec.ts** (12 tests) - Horse & schedule generation logic
 - **simulation.spec.ts** (8 tests) - Race simulation engine and speed calculations
 - **App.spec.ts** (2 tests) - Component integration tests
+- **horses.spec.ts** (11 tests) - Vuex horses module: mutations, actions, getters, guards
+- **ui.spec.ts** (11 tests) - Vuex ui module: phase state machine and transitions
+- **race.spec.ts** (38 tests) - Vuex race module: simulation lifecycle, guards, complex workflows
 
-All unit tests run in ~2 seconds.
+All unit tests run in ~125ms.
 
 ### E2E Tests (27 tests = 9 scenarios × 3 browsers)
 

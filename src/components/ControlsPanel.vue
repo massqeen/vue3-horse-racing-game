@@ -154,6 +154,16 @@ function handleReset() {
   letter-spacing: 0.5px;
 }
 
+/* Responsive adjustments for mobile */
+@media (max-width: 640px) {
+  .btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-md);
+  }
+}
+
 .btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);

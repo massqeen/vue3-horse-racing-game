@@ -95,6 +95,7 @@ export class RaceSimulation {
   private tickCount: number
   private finished: Set<number>
   private finishTimes: Map<number, number>
+  private finishedPositions: Map<number, number> // Cached positions for finished horses
 
   constructor(round: Round, seed: number = Date.now()) {
     this.round = round
@@ -105,6 +106,7 @@ export class RaceSimulation {
     this.startBurst = new Map()
     this.finished = new Set()
     this.finishTimes = new Map()
+    this.finishedPositions = new Map() // Initialize cache
     this.startTime = Date.now()
     this.tickCount = 0
 
@@ -145,6 +147,9 @@ export class RaceSimulation {
         this.progress.set(horse.id, this.round.distance)
         this.finished.add(horse.id)
         this.finishTimes.set(horse.id, elapsedMs)
+
+        // Update cached position when horse finishes
+        this.finishedPositions.set(horse.id, this.finished.size)
       } else {
         this.progress.set(horse.id, newDistance)
       }
@@ -154,25 +159,13 @@ export class RaceSimulation {
   // ...existing code...
 
   getProgress(): HorseProgress[] {
-    // Calculate current positions for finished horses
-    const finishedPositions = new Map<number, number>()
-
-    if (this.finished.size > 0) {
-      // Sort finished horses by finish time
-      const sortedFinished = Array.from(this.finishTimes.entries())
-        .sort((a, b) => a[1] - b[1]) // Sort by time ascending
-
-      // Assign positions (1st, 2nd, 3rd, etc.)
-      sortedFinished.forEach(([horseId], index) => {
-        finishedPositions.set(horseId, index + 1)
-      })
-    }
-
+    // Use cached positions instead of sorting on every call
+    // finishedPositions is updated incrementally in tick()
     return this.round.horses.map(({ horse }) => {
       const distance = this.progress.get(horse.id) || 0
       const position = (distance / this.round.distance) * 100
       const lane = this.lanes.get(horse.id) || 1
-      const finishPosition = finishedPositions.get(horse.id)
+      const finishPosition = this.finishedPositions.get(horse.id)
 
       return {
         horseId: horse.id,

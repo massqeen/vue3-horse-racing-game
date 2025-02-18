@@ -34,6 +34,3 @@ export interface RoundResult {
     time: number // seconds
   }[]
 }
-
-export type AppPhase = 'idle' | 'generated' | 'running' | 'finished'
-

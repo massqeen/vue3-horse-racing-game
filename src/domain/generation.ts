@@ -7,54 +7,11 @@ import {
   CONDITION_MIN,
   CONDITION_MAX,
   LANE_ORDER,
+  HORSE_NAMES,
+  HORSE_COLORS,
 } from './constants'
 import { createSeededRandom, randomInt, shuffleArray } from './rng'
 
-const HORSE_NAMES = [
-  'Thunder',
-  'Lightning',
-  'Storm',
-  'Blaze',
-  'Shadow',
-  'Spirit',
-  'Comet',
-  'Flash',
-  'Rocket',
-  'Phoenix',
-  'Titan',
-  'Apollo',
-  'Zeus',
-  'Atlas',
-  'Mercury',
-  'Neptune',
-  'Orion',
-  'Pegasus',
-  'Hercules',
-  'Achilles',
-]
-
-const HORSE_COLORS = [
-  '#FF6B6B',
-  '#4ECDC4',
-  '#45B7D1',
-  '#FFA07A',
-  '#98D8C8',
-  '#F7DC6F',
-  '#BB8FCE',
-  '#85C1E2',
-  '#F8B739',
-  '#52B788',
-  '#E63946',
-  '#A8DADC',
-  '#457B9D',
-  '#F4A261',
-  '#E76F51',
-  '#2A9D8F',
-  '#E9C46A',
-  '#F4ACB7',
-  '#9D84B7',
-  '#FFB4A2',
-]
 
 export function generateHorses(seed: number = Date.now()): Horse[] {
   const random = createSeededRandom(seed)
@@ -105,4 +62,3 @@ export function generateSchedule(horses: Horse[], seed: number = Date.now()): Ro
 
   return rounds
 }
-

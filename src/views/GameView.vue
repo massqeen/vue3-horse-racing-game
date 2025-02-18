@@ -55,7 +55,7 @@ h1 {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto auto;
   gap: var(--spacing-xl);
-  align-items: stretch; /* Растягивает карточки на полную высоту ряда */
+  align-items: stretch; /* Stretches the cards to the full row height */
 }
 
 /* Explicit grid positioning for perfect alignment */

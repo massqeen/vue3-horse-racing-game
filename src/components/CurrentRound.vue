@@ -66,6 +66,7 @@ import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import type { RootState } from '@/store'
 import type { HorseInLane } from '@/domain/types'
+import { useHoveredHorse } from '@/composables/useHoveredHorse'
 import {
   ROUND_TRANSITION_DURATION_MS,
   DOM_UPDATE_DELAY_MS,
@@ -76,10 +77,10 @@ import {
 } from '@/domain/constants'
 
 const store = useStore<RootState>()
+const { hoveredHorseId } = useHoveredHorse()
 
 const currentRound = computed(() => store.getters['race/currentRound'])
 const currentProgress = computed(() => store.state.race.currentProgress)
-const hoveredHorseId = computed(() => store.state.ui.hoveredHorseId)
 
 // Track the first horse to finish (lock leader)
 const firstFinisherId = ref<number | null>(null)

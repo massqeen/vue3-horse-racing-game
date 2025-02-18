@@ -4,6 +4,54 @@ export const HORSES_PER_ROUND = 10
 
 export const ROUND_DISTANCES = [1200, 1400, 1600, 1800, 2000, 2200] // meters
 
+// Horse names configuration
+export const HORSE_NAMES = [
+  'Thunder',
+  'Lightning',
+  'Storm',
+  'Blaze',
+  'Shadow',
+  'Spirit',
+  'Comet',
+  'Flash',
+  'Rocket',
+  'Phoenix',
+  'Titan',
+  'Apollo',
+  'Zeus',
+  'Atlas',
+  'Mercury',
+  'Neptune',
+  'Orion',
+  'Pegasus',
+  'Hercules',
+  'Achilles',
+]
+
+// Horse colors configuration
+export const HORSE_COLORS = [
+  '#FF6B6B',
+  '#4ECDC4',
+  '#45B7D1',
+  '#FFA07A',
+  '#98D8C8',
+  '#F7DC6F',
+  '#BB8FCE',
+  '#85C1E2',
+  '#F8B739',
+  '#52B788',
+  '#E63946',
+  '#A8DADC',
+  '#457B9D',
+  '#F4A261',
+  '#E76F51',
+  '#2A9D8F',
+  '#E9C46A',
+  '#F4ACB7',
+  '#9D84B7',
+  '#FFB4A2',
+]
+
 // Condition range: 80-100 (only elite competitive horses)
 export const CONDITION_MIN = 80
 export const CONDITION_MAX = 100
@@ -73,4 +121,3 @@ export const GOLD_MEDAL_POSITION = 1
 export const SILVER_MEDAL_POSITION = 2
 export const BRONZE_MEDAL_POSITION = 3
 export const PODIUM_POSITIONS = 3 // Number of podium positions
-

@@ -68,8 +68,10 @@ import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import type { RootState } from '@/store'
 import type { HorseInLane } from '@/domain/types'
+import { useSelectedScheduleRound } from '@/composables/useSelectedScheduleRound'
 
 const store = useStore<RootState>()
+const { setSelectedRound, clearSelection } = useSelectedScheduleRound()
 
 const schedule = computed(() => store.state.race.schedule)
 const currentRoundNumber = computed(() => {
@@ -79,9 +81,9 @@ const currentRoundNumber = computed(() => {
 
 const activeTab = ref(1)
 
-// Sync active tab with store
+// Sync active tab with composable
 watch(activeTab, (newTab) => {
-  store.dispatch('ui/setSelectedScheduleRound', newTab)
+  setSelectedRound(newTab)
 })
 
 
@@ -98,10 +100,10 @@ watch(schedule, (newSchedule) => {
     if (activeTab.value > newSchedule.length) {
       activeTab.value = 1
     }
-    // Update store with initial selection
-    store.dispatch('ui/setSelectedScheduleRound', activeTab.value)
+    // Update composable with initial selection
+    setSelectedRound(activeTab.value)
   } else {
-    store.dispatch('ui/setSelectedScheduleRound', null)
+    clearSelection()
   }
 })
 

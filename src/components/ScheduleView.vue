@@ -21,7 +21,7 @@
         </button>
       </nav>
       <div class="tab-content" role="tabpanel">
-        <div v-for="round in schedule" :key="round.roundNumber">
+        <div v-for="round in schedule" :key="round.roundNumber" class="round-card">
           <section v-if="activeTab === round.roundNumber" class="round-details">
             <header class="round-header">
               <h3 class="round-title">Round {{ round.roundNumber }}</h3>
@@ -39,7 +39,7 @@
                 <tr
                   v-for="horseInLane in sortedByLane(round.horses)"
                   :key="horseInLane.horse.id"
-                  class="table-row"
+                  class="table-row horse-chip"
                 >
                   <td class="col-lane">
                     <span class="lane-badge">{{ horseInLane.lane }}</span>

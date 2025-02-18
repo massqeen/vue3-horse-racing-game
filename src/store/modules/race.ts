@@ -158,14 +158,15 @@ const race: Module<RaceState, RootState> = {
 
           // Check if all rounds are complete
           const nextIndex = state.currentRoundIndex + 1
+
           if (nextIndex >= state.schedule.length) {
             // All rounds completed
             dispatch('ui/setPhase', 'finished', { root: true })
           } else {
-            // More rounds to go - add small delay before allowing next round start
+            // More rounds to go - automatically start next round after delay
             // This gives users time to see results before transition
             setTimeout(() => {
-              dispatch('ui/setPhase', 'generated', { root: true })
+              dispatch('startNextRound')
             }, ROUND_COMPLETION_DELAY_MS)
           }
         }

@@ -16,7 +16,7 @@
         </button>
       </nav>
       <div class="tab-content" role="tabpanel">
-        <div v-for="result in results" :key="result.roundNumber">
+        <div v-for="result in results" :key="result.roundNumber" class="result-wrapper">
           <section v-if="activeTab === result.roundNumber" class="result-card">
             <header class="result-header">
               <span class="result-round">Round {{ result.roundNumber }}</span>

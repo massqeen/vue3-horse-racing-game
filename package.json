@@ -9,6 +9,8 @@
     "preview": "vite preview",
     "test:unit": "vitest",
     "test:e2e": "playwright test",
+    "test:all": "npm run test:unit -- --run && npm run test:e2e",
+    "pre-merge": "run-p type-check lint:check && npm run test:all",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache",

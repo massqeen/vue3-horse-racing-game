@@ -2,6 +2,8 @@
 
 **Interactive horse racing simulation built with Vue 3, TypeScript, and Vuex 4.**
 
+🎮 **[Play Live Demo](https://massqeen.github.io/vue3-horse-racing-game/)**
+
 ## 🎯 Features
 
 - 🏇 **20 Unique Horses** - Each with unique name, color, and condition (80-100)
@@ -13,7 +15,7 @@
 - 📑 **Tabbed Interface** - Separate tabs for schedule and results navigation
 - 🎨 **Interactive Highlights** - Hover on horse to highlight in current race
 - ⚡ **Speed Dynamics** - Start boost, fatigue, final sprint based on condition
-- ✅ **Full Test Coverage** - 30 unit tests + 24 E2E tests (3 browsers)
+- ✅ **Full Test Coverage** - 30 unit tests + 27 E2E tests (9 scenarios × 3 browsers)
 
 ## 🚀 Quick Start
 
@@ -49,7 +51,8 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 4. **Watch the race** - Horses animate across the track with dynamic speed
 5. **View results** - After each round, results appear in a new tab
 6. **Continue racing** - Click "Start Round" for the next race until all 6 rounds complete
-7. **Click "Reset"** - Generate a new set of horses and start over
+7. **Click "Reset Game"** - Clears all data and returns to initial state
+8. **Generate again** - After reset, click "Generate" to start a new game with different horses
 
 ## 📏 Race Rules
 
@@ -195,7 +198,7 @@ npm run test:unit
 
 All unit tests run in ~2 seconds.
 
-### E2E Tests (24 tests = 8 tests × 3 browsers)
+### E2E Tests (27 tests = 9 scenarios × 3 browsers)
 
 ```sh
 # Install browsers first (one-time)
@@ -213,10 +216,11 @@ npm run test:e2e
 - ✅ Full race sequence (all 6 rounds automatically)
 - ✅ Results display with rankings and times
 - ✅ Medal display (🥇🥈🥉) for podium positions
+- ✅ Reset button functionality (clears game state and re-enables Generate)
 
 **Browsers:** Chromium, Firefox, WebKit
 
-**Performance:** All 24 E2E tests complete in ~1.5 minutes thanks to 200x simulation acceleration in test mode.
+**Performance:** All 27 E2E tests complete in ~1.5 minutes thanks to 200x simulation acceleration in test mode.
 
 > **Note:** E2E tests use accelerated simulation (200x faster) for quick execution. Production uses realistic speeds.
 

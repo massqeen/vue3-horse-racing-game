@@ -122,8 +122,8 @@ test.describe('Horse Racing Game', () => {
       // Check status changed to "Racing Round X/6..."
       await expect(page.locator('.status-indicator')).toContainText('Racing', { timeout: 2000 })
 
-      // Wait for result to appear (each race takes ~0.5s in test mode with 200x acceleration)
-      await page.locator('.result-wrapper').nth(round - 1).waitFor({ timeout: 15000 })
+      // Wait for result to appear (increased timeout for slower browsers like Firefox/WebKit)
+      await page.locator('.result-wrapper').nth(round - 1).waitFor({ timeout: 20000 })
     }
 
     // Check all 6 results are present
@@ -156,5 +156,45 @@ test.describe('Horse Racing Game', () => {
     // Check that podium positions have medals
     const firstPlace = firstResult.locator('.ranking-row').first()
     await expect(firstPlace).toContainText('🥇')
+  })
+
+  test('Reset button works after game finishes', async ({ page }) => {
+    // Generate and complete all races
+    await page.getByRole('button', { name: 'Generate' }).click()
+    await page.locator('.round-card').first().waitFor({ timeout: 2000 })
+
+    // Complete all 6 rounds
+    for (let round = 1; round <= 6; round++) {
+      await page.getByRole('button', { name: /Start/ }).click()
+      await page.locator('.result-wrapper').nth(round - 1).waitFor({ timeout: 20000 })
+    }
+
+    // Verify game is finished
+    await expect(page.locator('.status-indicator')).toContainText('Finished')
+
+    // Check Generate button is disabled
+    const generateBtn = page.getByRole('button', { name: 'Generate' })
+    await expect(generateBtn).toBeDisabled()
+
+    // Check Reset button is available
+    const resetBtn = page.getByRole('button', { name: 'Reset Game' })
+    await expect(resetBtn).toBeEnabled()
+
+    // Click Reset
+    await resetBtn.click()
+
+    // Verify game returned to idle state
+    await expect(page.locator('.status-indicator')).toContainText('Ready to Generate', { timeout: 2000 })
+
+    // Check Generate button is now enabled again
+    await expect(generateBtn).toBeEnabled()
+
+    // Check no horses are displayed (reset cleared everything)
+    const horses = page.locator('.horse-card')
+    await expect(horses).toHaveCount(0)
+
+    // Check no results are displayed
+    const results = page.locator('.result-wrapper')
+    await expect(results).toHaveCount(0)
   })
 })

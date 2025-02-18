@@ -48,7 +48,7 @@ const ui: Module<UiState, RootState> = {
   },
 
   getters: {
-    canGenerate: (state) => state.phase === 'idle' || state.phase === 'finished',
+    canGenerate: (state) => state.phase === 'idle',
     canStart: (state) => state.phase === 'generated',
     isRunning: (state) => state.phase === 'running',
     isFinished: (state) => state.phase === 'finished',

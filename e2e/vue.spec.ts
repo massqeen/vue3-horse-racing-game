@@ -114,17 +114,20 @@ test.describe('Horse Racing Game', () => {
     await page.getByRole('button', { name: 'Generate' }).click()
     await page.locator('.round-card').first().waitFor({ timeout: 2000 })
 
-    // Start racing
-    await page.getByRole('button', { name: 'Start' }).click()
+    // Start all 6 rounds sequentially
+    for (let round = 1; round <= 6; round++) {
+      // Click Start button for current round
+      await page.getByRole('button', { name: /Start/ }).click()
 
-    // Check status changed to "Racing Round X/6..."
-    await expect(page.locator('.status-indicator')).toContainText('Racing', { timeout: 2000 })
+      // Check status changed to "Racing Round X/6..."
+      await expect(page.locator('.status-indicator')).toContainText('Racing', { timeout: 2000 })
 
-    // Wait for at least one result to appear (each race takes ~0.5s in test mode with 200x acceleration)
-    await page.locator('.result-wrapper').first().waitFor({ timeout: 15000 })
+      // Wait for result to appear (each race takes ~0.5s in test mode with 200x acceleration)
+      await page.locator('.result-wrapper').nth(round - 1).waitFor({ timeout: 15000 })
+    }
 
-    // Wait for all 6 rounds to complete (6 rounds * ~0.5s each + delays = ~8s)
-    await expect(page.locator('.result-wrapper')).toHaveCount(6, { timeout: 60000 })
+    // Check all 6 results are present
+    await expect(page.locator('.result-wrapper')).toHaveCount(6)
 
     // Check final status is "Finished"
     await expect(page.locator('.status-indicator')).toContainText('Finished')

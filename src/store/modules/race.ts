@@ -7,7 +7,6 @@ import {
   SIMULATION_TICK_MS,
   SCHEDULE_SEED_OFFSET,
   ROUND_SEED_OFFSET,
-  ROUND_COMPLETION_DELAY_MS,
 } from '@/domain/constants'
 
 export interface RaceState {
@@ -94,7 +93,7 @@ const race: Module<RaceState, RootState> = {
       commit('CLEAR_RESULTS')
     },
 
-    startRaces({ dispatch, rootState }) {
+    startRaces({ dispatch, rootState, state }) {
       // Guard: prevent starting if race is already running
       if (rootState.ui.phase === 'running') {
         console.warn('[Race] Cannot start race - already running')
@@ -104,6 +103,12 @@ const race: Module<RaceState, RootState> = {
       // Guard: prevent starting if no schedule generated
       if (rootState.ui.phase !== 'generated') {
         console.warn('[Race] Cannot start race - no schedule generated')
+        return
+      }
+
+      // Guard: prevent starting if all rounds already completed
+      if (state.currentRoundIndex >= state.schedule.length - 1 && state.results.length === state.schedule.length) {
+        console.warn('[Race] Cannot start race - all rounds already completed')
         return
       }
 
@@ -163,11 +168,8 @@ const race: Module<RaceState, RootState> = {
             // All rounds completed
             dispatch('ui/setPhase', 'finished', { root: true })
           } else {
-            // More rounds to go - automatically start next round after delay
-            // This gives users time to see results before transition
-            setTimeout(() => {
-              dispatch('startNextRound')
-            }, ROUND_COMPLETION_DELAY_MS)
+            // More rounds to go - return to generated phase so user can start next round manually
+            dispatch('ui/setPhase', 'generated', { root: true })
           }
         }
       }, SIMULATION_TICK_MS)

@@ -19,8 +19,13 @@
 
 ### Prerequisites
 
-- Node.js `^20.19.0 || >=22.12.0`
+- Node.js `>=24.13.1` (LTS)
 - npm or pnpm
+
+> **Tip:** This project includes `.nvmrc` and `.node-version` files. 
+> - If you use [nvm](https://github.com/nvm-sh/nvm): `nvm use`
+> - If you use [fnm](https://github.com/Schniz/fnm): `fnm use`
+> - If you use [asdf](https://asdf-vm.com/): `asdf install`
 
 ### Installation
 
